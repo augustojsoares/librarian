@@ -1,0 +1,69 @@
+.book-card
+  margin: 1rem
+
+  &.list
+    height: 20rem
+    display: flex
+    margin: 2rem
+    
+    .card-styling
+      width: 100%
+      .link
+        flex-direction: row
+        align-items:flex-start
+        .thumbnail
+          height: 14rem
+          width: 10rem
+
+        .content
+          padding-left: 2rem
+          display: flex
+          flex-direction: column
+          align-items: flex-start
+          justify-content: space-between
+
+          >*
+            text-align: left
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            width: 100%
+        
+          .description
+            display: block
+          .tags
+            display: block
+
+  .link
+    text-decoration: none
+    color: black
+    height: 400px
+    width: 250px
+    flex-direction: column
+    display: flex
+    align-items: flex-start
+    padding: 2rem
+
+    .thumbnail
+      object-fit: contain
+      height: 300px
+      width: 250px
+
+    .content
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+      justify-content: space-evenly
+      flex-grow: 1
+
+      >*
+        padding-top: 1rem
+        text-align: left
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        width: 250px
+
+      .title
+        font-weight: bold
+        

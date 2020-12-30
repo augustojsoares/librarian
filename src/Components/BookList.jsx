@@ -59,7 +59,9 @@ const BookList = () => {
 		}
 	}, []) //fetches book data on page load
 
-	const BookListUI = () => (
+	return loading ? (
+		<Loader />
+	) : books.length ? (
 		<section className="book-list" data-test="test-book-list">
 			<AnimateGroup
 				className="book-list-animation-group"
@@ -75,9 +77,9 @@ const BookList = () => {
 				))}
 			</AnimateGroup>
 		</section>
+	) : (
+		<EmptyState />
 	)
-
-	return loading ? <Loader /> : books.length ? <BookListUI /> : <EmptyState />
 }
 
 export default BookList

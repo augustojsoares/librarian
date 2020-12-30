@@ -99,7 +99,9 @@ const BookForm = () => {
 		})
 	}
 
-	const BookFormUI = () => (
+	return loading ? (
+		<Loader message={loadingMessage} />
+	) : (
 		<section className="book-form" data-test="test-book-form">
 			<Animate
 				sequence="fade down"
@@ -166,8 +168,6 @@ const BookForm = () => {
 			</Animate>
 		</section>
 	)
-
-	return loading ? <Loader message={loadingMessage} /> : <BookFormUI />
 }
 
 export default BookForm

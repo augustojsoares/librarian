@@ -1,6 +1,7 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useState } from 'react'
+import { useLocation, useHistory } from 'react-router-dom'
 import { AnimateGroup, Animate } from '@helpscout/hsds-react'
-import { BookCard, Loader, EmptyState } from 'Components'
+import { BookCard, Loader, EmptyState, BookListHeader } from 'Components'
 
 import API from 'API'
 
@@ -35,10 +36,24 @@ const bookListReducer = (state, { type, payload }) => {
 }
 
 const BookList = () => {
+	const history = useHistory()
+	const { pathname, search } = useLocation()
+	const pageURLParams = new URLSearchParams(search)
+
+	const [isListView, setIsListView] = useState(
+		pageURLParams.get('view') === 'list'
+	)
+	const [selectedTags, setSelectedTags] = useState(
+		pageURLParams.get('tags_like')?.split(',') || []
+	)
+
 	const [{ books, loading }, dispatch] = useReducer(bookListReducer, {
 		books: [],
 		loading: false,
 	})
+
+	const refreshPageQueryParameters = () =>
+		history.push(`${pathname}?${pageURLParams}`)
 
 	/**
 	 * Fetches a book list through the API object and dispatches the proper actions to update the reducer state
@@ -48,23 +63,48 @@ const BookList = () => {
 	const handleFetchBookData = async (filter = '') => {
 		dispatch({ type: ACTION_BOOK_LIST_LOADING })
 		const payload = await API.Books.getAll(filter)
+
+		if (filter) {
+			const newSearchParams = new URLSearchParams(filter)
+			newSearchParams.forEach((value, key) => {
+				pageURLParams.set(key, value)
+			})
+		}
+		refreshPageQueryParameters()
+
 		dispatch({ type: ACTION_BOOK_LIST_LOADING_SUCCESS, payload })
 	}
 
+	const updateLayout = isList => {
+		setIsListView(isList)
+		pageURLParams.set('view', isList ? 'list' : 'grid')
+		refreshPageQueryParameters()
+	}
+
 	useEffect(() => {
-		handleFetchBookData()
+		if (selectedTags.length) {
+			pageURLParams.set('tags_like', selectedTags.join(','))
+		}
+		handleFetchBookData(pageURLParams.toString())
 
 		return () => {
 			null
 		}
-	}, []) //fetches book data on page load
+	}, [selectedTags])
 
 	return loading ? (
 		<Loader />
 	) : books.length ? (
 		<section className="book-list" data-test="test-book-list">
+			<BookListHeader
+				fetchBookData={handleFetchBookData}
+				updateLayout={updateLayout}
+				isListView={isListView}
+				updateTagsToFilter={setSelectedTags}
+				selectedTags={selectedTags}
+			/>
 			<AnimateGroup
-				className="book-list-animation-group"
+				className={`book-list-animation-group ${isListView ? 'list' : ''}`}
 				stagger
 				easing="ease-in"
 				duration={150}
@@ -72,7 +112,7 @@ const BookList = () => {
 			>
 				{books.map(book => (
 					<Animate key={book.id}>
-						<BookCard book={book} />
+						<BookCard book={book} list={isListView} />
 					</Animate>
 				))}
 			</AnimateGroup>

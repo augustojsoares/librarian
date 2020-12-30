@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Outline&family=Ubuntu:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Bungee+Outline&family=Ubuntu:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Bungee+Outline&family=Bungee+Shade&family=Ubuntu:wght@400;500;700&display=swap');
+@import variables
+
+.page-header
+  display: flex
+  justify-content: center
+  background-color: rgb(18, 146, 238)
+  height: $header-height
+  width: 100%
+  position: fixed
+  top: 0
+  z-index: 10
+
+  &.minimized
+    height: $header-height-minimized
+
+    hgroup
+      .title-logo-block
+        flex-direction: row
+        .logo
+          height: 4rem
+          margin: 1rem
+        .title
+          font-size: 3rem
+      .subtitle
+        display: none
+
+  hgroup
+    flex-direction: column
+    display: flex
+    
+    .title-logo-block
+      display: flex
+      align-items: center
+      justify-content: center
+      flex-direction: column
+
+      .logo
+        height: 8rem
+        margin: 2rem
+
+      .title
+        font-family: Bungee Outline
+        font-family: Bangers
+        font-family: Bungee Shade
+        color: white
+        font-size: 6rem
+        letter-spacing: .1rem

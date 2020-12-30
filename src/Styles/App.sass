@@ -9,6 +9,11 @@
 body
   margin: 0
 
+  >div
+    display: flex
+    align-items: center
+    justify-content: center
+
 .page-container
   display: flex
   flex-direction: column
@@ -19,6 +24,9 @@ body
   max-width: 1800px
   margin-top: $header-height
   display: flex
+  align-items: center
+  justify-content: center
+  flex-grow: 1
 
   &.minimized
     margin-top: $header-height-minimized

@@ -5,36 +5,41 @@
     height: 20rem
     display: flex
     margin: 2rem
+    width: calc(100% - 4rem)
     
     .card-styling
       width: 100%
-      .link
-        flex-direction: row
-        align-items:flex-start
-        .thumbnail
-          height: 14rem
-          width: 10rem
+      flex-direction: row
+      align-items:flex-start
+      height: auto
+      align-items: center
 
-        .content
-          padding-left: 2rem
-          display: flex
-          flex-direction: column
-          align-items: flex-start
-          justify-content: space-between
+      .thumbnail
+        height: 14rem
+        width: 10rem
 
-          >*
-            text-align: left
-            white-space: nowrap
-            overflow: hidden
-            text-overflow: ellipsis
-            width: 100%
-        
-          .description
-            display: block
-          .tags
-            display: block
+      .content
+        padding-left: 2rem
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+        justify-content: space-between
+        width: 0
 
-  .link
+        >*
+          text-align: left
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
+          width: 100%
+      
+        .description
+          display: block
+        .tags
+          display: block
+          float: left
+
+  .card-styling
     text-decoration: none
     color: black
     height: 400px
@@ -66,4 +71,7 @@
 
       .title
         font-weight: bold
+      .description,
+      .tags
+        display: none
         

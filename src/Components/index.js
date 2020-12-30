@@ -8,6 +8,7 @@ import TagList from 'Components/TagList'
 import ImageInput from 'Components/ImageInput'
 import TagSelector from 'Components/TagSelector'
 import DateInput from 'Components/DateInput'
+import PageHeader from 'Components/PageHeader'
 
 export {
 	BookList,
@@ -20,4 +21,5 @@ export {
 	ImageInput,
 	TagSelector,
 	DateInput,
+	PageHeader,
 }

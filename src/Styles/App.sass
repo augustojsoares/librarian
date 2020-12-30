@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+@import variables
 
 *
   font-family: Ubuntu
@@ -7,3 +8,17 @@
 
 body
   margin: 0
+
+.page-container
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.app
+  max-width: 1800px
+  margin-top: $header-height
+  display: flex
+
+  &.minimized
+    margin-top: $header-height-minimized

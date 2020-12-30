@@ -5,5 +5,19 @@ import BookCard from 'Components/BookCard'
 import EmptyState from 'Components/EmptyState'
 import Loader from 'Components/Loader'
 import TagList from 'Components/TagList'
+import ImageInput from 'Components/ImageInput'
+import TagSelector from 'Components/TagSelector'
+import DateInput from 'Components/DateInput'
 
-export { BookList, BookDetail, BookForm, BookCard, EmptyState, Loader, TagList }
+export {
+	BookList,
+	BookDetail,
+	BookForm,
+	BookCard,
+	EmptyState,
+	Loader,
+	TagList,
+	ImageInput,
+	TagSelector,
+	DateInput,
+}

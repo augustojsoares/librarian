@@ -19,7 +19,10 @@ const DateInput = ({
 }) => {
 	return (
 		<>
-			<Datepicker firstDayOfWeek={0} onDateChange={onChange} />
+			<Datepicker
+				firstDayOfWeek={0}
+				onDateChange={({ startDate }) => onChange(startDate)}
+			/>
 			<input
 				className="hidden-date-input"
 				id={id}

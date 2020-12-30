@@ -15,6 +15,13 @@ const ACTION_BOOK_DETAIL_DO_DELETE = 'ACTION_BOOK_DETAIL_DO_DELETE'
 const ACTION_BOOK_DETAIL_DO_DELETE_SUCCESS =
 	'ACTION_BOOK_DETAIL_DO_DELETE_SUCCESS'
 
+/**
+ * Reducer function for the useReducer hook.
+ * State machine-like, to facilitate keeping dependant state in proper sync
+ * @param {object} state The current state value.
+ * @param {object} action The action object containing and action type and optionally a data payload
+ * @returns {number} The new updated state for the useReducer hook
+ */
 const bookDetailReducer = (state, { type, payload }) => {
 	switch (type) {
 		case ACTION_BOOK_DETAIL_LOADING:
@@ -75,13 +82,17 @@ const BookDetail = () => {
 		return () => {
 			null
 		}
-	}, [])
+	}, []) // fetches book data on page load
 
 	const handleClickDelete = () =>
 		dispatch({ type: ACTION_BOOK_DETAIL_CLICK_DELETE })
 	const handleCancelDelete = () =>
 		dispatch({ type: ACTION_BOOK_DETAIL_CANCEL_DELETE })
 
+	/**
+	 * Deletes a book from the db and dispatches actions to keep state in sync
+	 * @returns {void}
+	 */
 	const handleDeleteBook = async () => {
 		dispatch({ type: ACTION_BOOK_DETAIL_DO_DELETE })
 		const payload = await API.Books.delete(id)
@@ -134,10 +145,7 @@ const BookDetail = () => {
 			/>
 		</Modal>
 	)
-
-	return loading ? (
-		<Loader />
-	) : bookDetailData.id ? (
+	const BookDetailUI = () => (
 		<>
 			<Animate sequence="fade down" duration="1000">
 				<section className="book-detail" data-test="test-book-detail">
@@ -151,6 +159,12 @@ const BookDetail = () => {
 			</Animate>
 			<DeleteModal />
 		</>
+	)
+
+	return loading ? (
+		<Loader />
+	) : bookDetailData.id ? (
+		<BookDetailUI />
 	) : (
 		<EmptyState />
 	)

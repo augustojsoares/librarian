@@ -45,44 +45,39 @@ const BookList = () => {
 	 * @param {string} [filter] The filters to pass with the request
 	 * @returns {void}
 	 */
-	const fetchBookData = async (filter = '') => {
+	const handleFetchBookData = async (filter = '') => {
 		dispatch({ type: ACTION_BOOK_LIST_LOADING })
 		const payload = await API.Books.getAll(filter)
 		dispatch({ type: ACTION_BOOK_LIST_LOADING_SUCCESS, payload })
 	}
 
 	useEffect(() => {
-		fetchBookData()
+		handleFetchBookData()
 
 		return () => {
 			null
 		}
 	}, []) //fetches book data on page load
 
-	return (
-		<>
-			{loading ? (
-				<Loader />
-			) : books.length ? (
-				<section className="book-list" data-test="test-book-list">
-					<AnimateGroup
-						className="book-list-animation-group"
-						stagger
-						easing="ease-in"
-						duration={150}
-					>
-						{books.map(book => (
-							<Animate sequence="fade down" key={book.id}>
-								<BookCard book={book} />
-							</Animate>
-						))}
-					</AnimateGroup>
-				</section>
-			) : (
-				<EmptyState />
-			)}
-		</>
+	const BookListUI = () => (
+		<section className="book-list" data-test="test-book-list">
+			<AnimateGroup
+				className="book-list-animation-group"
+				stagger
+				easing="ease-in"
+				duration={150}
+				sequence="fade down"
+			>
+				{books.map(book => (
+					<Animate key={book.id}>
+						<BookCard book={book} />
+					</Animate>
+				))}
+			</AnimateGroup>
+		</section>
 	)
+
+	return loading ? <Loader /> : books.length ? <BookListUI /> : <EmptyState />
 }
 
 export default BookList

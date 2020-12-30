@@ -78,6 +78,7 @@ const BookForm = () => {
 		const { id } = await API.Books.create({
 			...formData,
 			coverImage,
+			addedDate: new Date(),
 			tags,
 		})
 

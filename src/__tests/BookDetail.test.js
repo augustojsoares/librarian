@@ -1,17 +1,13 @@
+import React from 'react'
 import { render, screen, configure } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { BookDetail } from 'Components'
-
-const mockResponse = {
-	id: 9,
-	title: 'Polarised foreground approach',
-	description:
-		'Aut dolor consequatur ad dolorum odio. Est et non dolorum et id sequi. Autem officia sunt sunt.',
-	author: 'Iris McLaughlin',
-	publicationDate: '1898-04-10T21:10:54.327Z',
-	coverImage: 'https://edit.org/images/cat/book-covers-big-2019101610.jpg',
-	tags: ['ADVENTURE', 'SHORT'],
-}
+import routeData from 'react-router'
+import {
+	mockBook as mockResponse,
+	mockParams,
+	mockHeaders,
+} from '__tests/__mocks'
 
 configure({ testIdAttribute: 'data-test' })
 
@@ -19,6 +15,7 @@ beforeEach(() => {
 	jest.spyOn(global, 'fetch').mockResolvedValue({
 		json: jest.fn().mockResolvedValue(mockResponse),
 	})
+	jest.spyOn(routeData, 'useParams').mockReturnValue(mockParams)
 })
 
 afterEach(() => {
@@ -26,6 +23,20 @@ afterEach(() => {
 })
 
 describe('<BookDetail />', () => {
+	it('fetches the correct data', () => {
+		render(
+			<MemoryRouter>
+				<BookDetail />
+			</MemoryRouter>
+		)
+
+		expect(global.fetch).toHaveBeenCalledTimes(1)
+		expect(global.fetch).toHaveBeenCalledWith(
+			'http://localhost:3001/books/999',
+			mockHeaders()
+		)
+	})
+
 	it('renders the book detail with all elements', async () => {
 		render(
 			<MemoryRouter>

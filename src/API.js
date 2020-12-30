@@ -1,4 +1,7 @@
 const API_ENDPOINT = 'http://localhost:3001'
+const CLOUDINARY_UPLOAD_URL =
+	'https://api.cloudinary.com/v1_1/dw3fq5hag/image/upload'
+const CLOUDINARY_UPLOAD_PRESET = 'hso6d8bm'
 
 /**
  * Wrapper method to extract json from fetch responses
@@ -18,6 +21,9 @@ const getConfig = ({ method, data }) => ({
 	cache: 'no-cache',
 	credentials: 'same-origin',
 	body: JSON.stringify(data),
+	headers: {
+		'Content-Type': 'application/json',
+	},
 })
 
 /**
@@ -55,6 +61,19 @@ const Books = {
 	delete: bookId => requests.delete(`/books/${bookId}`),
 }
 
+const Cloudinary = {
+	upload: data => {
+		const body = new FormData()
+		body.append('file', data)
+		body.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+		return fetch(CLOUDINARY_UPLOAD_URL, {
+			method: 'POST',
+			body: body,
+		}).then(responseData)
+	},
+}
+
 export default {
 	Books,
+	Cloudinary,
 }

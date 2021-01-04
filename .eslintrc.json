@@ -12,6 +12,6 @@
 		"ecmaVersion": 12,
 		"sourceType": "module"
 	},
-	"plugins": ["react", "jest"],
+	"plugins": ["react", "jest", "jsx-a11y"],
 	"rules": {}
 }

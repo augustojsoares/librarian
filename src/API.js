@@ -1,14 +1,38 @@
+import parse from 'parse-link-header'
+
 const API_ENDPOINT = 'http://localhost:3001'
 const CLOUDINARY_UPLOAD_URL =
 	'https://api.cloudinary.com/v1_1/dw3fq5hag/image/upload'
 const CLOUDINARY_UPLOAD_PRESET = 'hso6d8bm'
+
+const PAGE_RANGE = 25
 
 /**
  * Wrapper method to extract json from fetch responses
  * @param {response} res The request response
  * @returns {json} The response's json payload
  */
-const responseData = res => res.json()
+const parseResponseJSON = res => res.json()
+
+/**
+ * Extracts json from response and parses Link header to extract pagination info
+ * @param {response} res The request response
+ * @returns {object} An object containing the response promise and the parsed pagination info
+ */
+const enrichedResponseParser = res => {
+	if (res.headers.get('link')) {
+		return {
+			...parse(res.headers.get('link')),
+			dataPromise: res.json(),
+		}
+	}
+	return {
+		dataPromise: res.json(),
+		last: {
+			_page: 1,
+		},
+	}
+}
 
 /**
  * Request configuration builder
@@ -31,21 +55,21 @@ const getConfig = ({ method, data }) => ({
  *  without changing the specific resource object methods
  */
 const requests = {
-	get: url =>
+	get: ({ url, responseParser = parseResponseJSON }) =>
 		fetch(`${API_ENDPOINT}${url}`, getConfig({ method: 'GET' })).then(
-			responseData
+			responseParser
 		),
-	post: (url, data) =>
+	post: ({ url, data, responseParser = parseResponseJSON }) =>
 		fetch(`${API_ENDPOINT}${url}`, getConfig({ method: 'POST', data })).then(
-			responseData
+			responseParser
 		),
-	patch: (url, data) =>
+	patch: ({ url, data, responseParser = parseResponseJSON }) =>
 		fetch(`${API_ENDPOINT}${url}`, getConfig({ method: 'PATCH', data })).then(
-			responseData
+			responseParser
 		),
-	delete: url =>
+	delete: ({ url, responseParser = parseResponseJSON }) =>
 		fetch(`${API_ENDPOINT}${url}`, getConfig({ method: 'DELETE' })).then(
-			responseData
+			responseParser
 		),
 }
 
@@ -54,11 +78,14 @@ const requests = {
  * each resource type warrants its own object
  */
 const Books = {
-	get: bookId => requests.get(`/books/${bookId}`),
+	get: bookId => requests.get({ url: `/books/${bookId}` }),
 	getAll: (filter = '') =>
-		requests.get(`/books/?${filter}&_page=${1}&_limit=25`),
-	create: body => requests.post('/books/', body),
-	delete: bookId => requests.delete(`/books/${bookId}`),
+		requests.get({
+			url: `/books/?${filter}&_limit=${PAGE_RANGE}`,
+			responseParser: enrichedResponseParser,
+		}),
+	create: data => requests.post({ url: '/books/', data }),
+	delete: bookId => requests.delete({ url: `/books/${bookId}` }),
 }
 
 const Cloudinary = {
@@ -69,11 +96,12 @@ const Cloudinary = {
 		return fetch(CLOUDINARY_UPLOAD_URL, {
 			method: 'POST',
 			body: body,
-		}).then(responseData)
+		}).then(parseResponseJSON)
 	},
 }
 
 export default {
 	Books,
 	Cloudinary,
+	PAGE_RANGE,
 }

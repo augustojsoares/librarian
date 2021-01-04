@@ -15,10 +15,10 @@ const colors = [
 	'lightBlue',
 ]
 
-const TagList = ({ tags }) => {
+const TagList = ({ tags, ...rest }) => {
 	return (
-		<TL className="tags" aria-label="tags" showAll>
-			{tags.map((tag, index) => (
+		<TL className="tags" aria-label="tags" showAll {...rest}>
+			{tags?.map((tag, index) => (
 				<Tag key={tag} filled color={colors[index]} className="tag padded">
 					{tag}
 				</Tag>
@@ -28,6 +28,7 @@ const TagList = ({ tags }) => {
 }
 
 TagList.propTypes = {
+	/** The list of tags to show */
 	tags: PropTypes.array.isRequired,
 }
 

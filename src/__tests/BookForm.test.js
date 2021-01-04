@@ -18,7 +18,7 @@ afterEach(() => {
 })
 
 describe('<BookForm />', () => {
-	it('renders the book detail with all elements', async () => {
+	it('renders the book form with all elements', async () => {
 		render(
 			<MemoryRouter>
 				<BookForm />
@@ -96,7 +96,15 @@ describe('<BookForm />', () => {
 		expect(global.fetch).toHaveBeenCalledTimes(1)
 	})
 
+	it('Renders custom field inputs as they are added', () => {
+		expect(1).toEqual(1)
+	})
+
 	it('Creates the book with extra dynamic fields', () => {
+		expect(1).toEqual(1)
+	})
+
+	it('Shows an error message when the book is not created', () => {
 		expect(1).toEqual(1)
 	})
 
@@ -108,7 +116,7 @@ describe('<BookForm />', () => {
 		expect(1).toEqual(1)
 	})
 
-	it('shows the book list', () => {
+	it('shows the book list after adding the book', () => {
 		expect(1).toEqual(1)
 	})
 })

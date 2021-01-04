@@ -12,7 +12,6 @@ import 'Styles/App.sass'
 function App() {
 	const [isMinimized, setIsMinimized] = useState(false)
 	const handleScroll = () => {
-		console.log(document.documentElement.scrollTop)
 		setIsMinimized(
 			document.body.scrollTop > 0 || document.documentElement.scrollTop > 0
 		)

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import 'Styles/ImageInput.sass'
 
 /**
- * A wrapper on a native image input to uniformize the change handler parameters with
- * the ones from Input component from hsds-react
+ * A wrapper on a native image (file) input to uniformize the change handler parameters with
+ * the ones from the Input component from hsds-react
  */
 const ImageInput = ({ onChange, required = false, id = 'image-input' }) => {
 	const handleOnChange = e => {
@@ -27,8 +27,11 @@ const ImageInput = ({ onChange, required = false, id = 'image-input' }) => {
 }
 
 ImageInput.propTypes = {
+	/** Input's onChange callback */
 	onChange: PropTypes.func.isRequired,
+	/** Whether the field is required */
 	required: PropTypes.bool,
+	/** Input's id */
 	id: PropTypes.string,
 }
 

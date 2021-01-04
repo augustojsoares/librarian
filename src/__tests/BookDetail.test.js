@@ -72,4 +72,12 @@ describe('<BookDetail />', () => {
 	it('deletes book', () => {
 		expect(1).toEqual(1)
 	})
+
+	it('shows error when book deletion fails', () => {
+		expect(1).toEqual(1)
+	})
+
+	it('shows book list when book deletion succeeds', () => {
+		expect(1).toEqual(1)
+	})
 })

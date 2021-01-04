@@ -6,8 +6,8 @@ import 'Styles/DateInput.sass'
 
 /**
  * Since the available Datepicker component does not wrap an HTML input,
- * this wrapper was necessary to leverage native form validation (required)
- * as well as label attribution.
+ * this wrapper was necessary to leverage native form validation (required field)
+ * as well as label attribution (a11y).
  * Although it serves as a proof of concept, for production use this would further require,
  * at the very least, proper management of focus when validation is triggered
  */
@@ -34,10 +34,14 @@ const DateInput = ({
 }
 
 DateInput.propTypes = {
+	/** Input's change callback */
 	onChange: PropTypes.func.isRequired,
+	/** Input's id */
 	id: PropTypes.string,
+	/** Whether or not field is required */
 	required: PropTypes.bool,
-	value: PropTypes.any.isRequired,
+	/** Input's controlled value */
+	value: PropTypes.any,
 }
 
 export default DateInput

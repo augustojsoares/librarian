@@ -61,23 +61,27 @@ const tagOptions = [
 	},
 ]
 
-const TagSelector = ({ trigger = 'Filter by tag', tags, setTags }) => {
+const TagSelector = ({
+	trigger = 'Filter by tag',
+	selectedTags,
+	setSelectedTags,
+}) => {
 	/**
 	 * Updated selected tag list. Add if not present, otherwise remove from list
 	 * @param {string} newTag The tag that was selected from the dropdown
-	 * @returns {string[]} The updated list of tags
+	 * @return {string[]} The updated list of tags
 	 */
 	const handleTagSelection = newTag => {
-		const updatedTagsList = tags.includes(newTag)
-			? tags.filter(tag => tag !== newTag)
-			: [...tags, newTag]
+		const updatedTagsList = selectedTags.includes(newTag)
+			? selectedTags.filter(tag => tag !== newTag)
+			: [...selectedTags, newTag]
 
-		setTags(updatedTagsList)
+		setSelectedTags(updatedTagsList)
 	}
 
 	return (
 		<Dropdown
-			selectedItem={tags}
+			selectedItem={selectedTags}
 			allowMultipleSelection
 			className="sort-menu"
 			trigger={trigger}
@@ -89,9 +93,12 @@ const TagSelector = ({ trigger = 'Filter by tag', tags, setTags }) => {
 }
 
 TagSelector.propTypes = {
+	/** Text to display on the dropdown button */
 	trigger: PropTypes.string,
-	tags: PropTypes.array.isRequired,
-	setTags: PropTypes.func.isRequired,
+	/** list of currently selected tags */
+	selectedTags: PropTypes.array.isRequired,
+	/** Callback to update list of selected tags */
+	setSelectedTags: PropTypes.func.isRequired,
 }
 
 export default TagSelector

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
-
 import { Image, Animate } from '@helpscout/hsds-react'
 
 import 'Styles/PageHeader.sass'
@@ -31,11 +30,17 @@ const PageHeader = ({ isMinimized }) => {
 					<h2 className="subtitle">Your online book keeper</h2>
 				</Animate>
 			</hgroup>
+			{/* Couldn't use Nav from hsds*/}
+			<nav className="navbar">
+				<NavLink to="/books">Home</NavLink>
+				<NavLink to="/books/create">Create</NavLink>
+			</nav>
 		</header>
 	)
 }
 
 PageHeader.propTypes = {
+	/** Header is minimized (on scroll) */
 	isMinimized: PropTypes.bool.isRequired,
 }
 

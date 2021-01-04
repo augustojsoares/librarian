@@ -9,55 +9,51 @@ import {
 	Radio,
 	Button,
 } from '@helpscout/hsds-react'
-import { TagSelector } from 'Components'
+import { TagSelector, TagList } from 'Components'
 
 import 'Styles/BookListHeader.sass'
 
 const sortOptions = [
 	{
 		name: 'titleAsc',
-		label: 'Title Ascending',
-		value: '_sort=title&_order=asc',
+		label: 'Title ascending',
+		value: 'title|asc',
 	},
 	{
 		name: 'titleDesc',
 		label: 'Title descending',
-		value: '_sort=title&_order=desc',
+		value: 'title|desc',
 	},
 	{
 		name: 'addedDesc',
 		label: 'Added newest',
-		value: '_sort=addedDate&_order=desc',
+		value: 'addedDate|desc',
 	},
 	{
 		name: 'addedAsc',
 		label: 'Added oldest',
-		value: '_sort=addedDate&_order=asc',
+		value: 'addedDate|asc',
 	},
 	{
 		name: 'publicationDesc',
 		label: 'Published newest',
-		value: '_sort=publicationDate&_order=desc',
+		value: 'publicationDate|desc',
 	},
 	{
 		name: 'publicationAsc',
 		label: 'Published oldest',
-		value: '_sort=publicationDate&_order=asc',
+		value: 'publicationDate|asc',
 	},
 ]
 
 const BookListHeader = ({
-	fetchBookData,
+	isListLayout,
+	tagsToFilter,
 	updateLayout,
-	isListView,
 	updateTagsToFilter,
-	selectedTags,
+	updateSortFilter,
 }) => {
 	const history = useHistory()
-
-	const handleSortingChange = newSortingFilter => {
-		fetchBookData(newSortingFilter)
-	}
 
 	const handleLayoutChange = value => {
 		updateLayout(value === 'list')
@@ -65,6 +61,18 @@ const BookListHeader = ({
 
 	const goToCreateBook = () => history.push('/books/create')
 
+	/**
+	 * Converts the filter string returned from the select to a compatible object and calls the parents update function on it
+	 * @param {string} newFilter
+	 */
+	const handleFilterSelect = newFilter => {
+		const [_sort, _order] = newFilter.split('|')
+		updateSortFilter({ _sort, _order })
+	}
+
+	/**
+	 * @todo evolve filter selector to display currently selected sorting option
+	 */
 	return (
 		<header className="book-list-header">
 			<span className="filter-group">
@@ -75,19 +83,20 @@ const BookListHeader = ({
 					className="sort-menu"
 					trigger="Sort by"
 					items={sortOptions}
-					onSelect={handleSortingChange}
+					onSelect={handleFilterSelect}
 					isFocusSelectedItemOnOpen
 				/>
 				<TagSelector
 					trigger="Filter By Tag"
-					tags={selectedTags}
-					setTags={updateTagsToFilter}
+					selectedTags={tagsToFilter}
+					setSelectedTags={updateTagsToFilter}
 				/>
+				<TagList tags={tagsToFilter} />
 				<ChoiceGroup
 					multiSelect={false}
 					className="layout-menu"
 					onChange={handleLayoutChange}
-					value={isListView ? 'list' : 'grid'}
+					value={isListLayout ? 'list' : 'grid'}
 				>
 					<span className="selection-group">
 						<Radio label="Grid" value="grid" name="grid" />
@@ -107,11 +116,16 @@ const BookListHeader = ({
 }
 
 BookListHeader.propTypes = {
-	fetchBookData: PropTypes.func.isRequired,
+	/** Whether the layout type is list (or by oposition, grid) */
+	isListLayout: PropTypes.bool.isRequired,
+	/** The list of currently selected tags */
+	tagsToFilter: PropTypes.array.isRequired,
+	/** Callback to update the layout type on the parent */
 	updateLayout: PropTypes.func.isRequired,
-	isListView: PropTypes.bool.isRequired,
+	/** Callback to update the tag list on the parent */
 	updateTagsToFilter: PropTypes.func.isRequired,
-	selectedTags: PropTypes.array.isRequired,
+	/** Callback to update sort filter on the parent */
+	updateSortFilter: PropTypes.func.isRequired,
 }
 
 export default BookListHeader

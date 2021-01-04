@@ -1,29 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Outline&family=Ubuntu:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Bungee+Outline&family=Ubuntu:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Bungee+Outline&family=Bungee+Shade&family=Ubuntu:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade:wght@400&display=swap');
 @import variables
 
 .page-header
   display: flex
-  justify-content: center
+  justify-content: space-around
   background-color: rgb(18, 146, 238)
   height: $header-height
   width: 100%
   position: fixed
   top: 0
   z-index: 10
+  flex-direction: column
+
+  a
+    text-decoration: none
 
   &.minimized
     height: $header-height-minimized
+    justify-content: space-evenly
 
     hgroup
       .title-logo-block
         flex-direction: row
         .logo
           height: 4rem
-          margin: 1rem
+          margin: 0 1rem
         .title
           font-size: 3rem
+          margin: 0
       .subtitle
         display: none
 
@@ -39,12 +43,23 @@
 
       .logo
         height: 8rem
-        margin: 2rem
+        margin: 0 2rem
 
       .title
-        font-family: Bungee Outline
-        font-family: Bangers
         font-family: Bungee Shade
         color: white
         font-size: 6rem
-        letter-spacing: .1rem
+        letter-spacing: .3rem
+        font-weight: 400
+        margin: 2rem 0
+
+    .subtitle
+      margin: 0
+  
+  .navbar
+    a
+      padding: 0 2rem
+      color: white
+
+      &:hover
+        text-decoration: underline

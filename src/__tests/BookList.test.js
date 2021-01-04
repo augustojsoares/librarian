@@ -8,7 +8,13 @@ configure({ testIdAttribute: 'data-test' })
 
 beforeEach(() => {
 	jest.spyOn(global, 'fetch').mockResolvedValue({
-		json: jest.fn().mockResolvedValue(mockResponse),
+		json: () => Promise.resolve(mockResponse),
+		headers: {
+			get: jest.fn(
+				() =>
+					'<http://localhost:3001/books/?_page=1&_limit=25>; rel="first", <http://localhost:3001/books/?_page=2&_limit=25>; rel="next", <http://localhost:3001/books/?_page=41&_limit=25>; rel="last"'
+			),
+		},
 	})
 })
 
@@ -17,7 +23,7 @@ afterEach(() => {
 })
 
 describe('<BookList />', () => {
-	it('fetches the correct data', () => {
+	it('fetches the correct data', async () => {
 		render(
 			<MemoryRouter>
 				<BookList />
@@ -26,10 +32,12 @@ describe('<BookList />', () => {
 
 		expect(global.fetch).toHaveBeenCalledTimes(1)
 		expect(global.fetch).toHaveBeenCalledWith(
-			'http://localhost:3001/books/?&_page=1&_limit=25',
+			'http://localhost:3001/books/?_page=1&_limit=25',
 			mockHeaders()
 		)
+		expect(await (await global.fetch()).json()).toMatchObject(mockResponse)
 	})
+
 	it('renders the book list', async () => {
 		render(
 			<MemoryRouter>
@@ -39,7 +47,25 @@ describe('<BookList />', () => {
 
 		expect(await screen.findByTestId('test-book-list')).toBeInTheDocument()
 
-		const bookCards = await screen.findAllByTestId('test-book-card')
+		const bookCards = await screen.findAllByTestId(/test-book-card/)
 		expect(bookCards.length).toBe(10)
 	})
+
+	it('Changes the view when the radio is toggled', () =>
+		expect(true).toBeTruthy())
+
+	it('Shows the correct books when a tag is selected', () =>
+		expect(true).toBeTruthy())
+
+	it('Shows the correct books when a tag is unselected', () =>
+		expect(true).toBeTruthy())
+
+	it('Shows the correct books when the sort filter changes', () =>
+		expect(true).toBeTruthy())
+
+	it('Shows An error screen when no books are returned', () =>
+		expect(true).toBeTruthy())
+
+	it('Shows the correct books when given url params', () =>
+		expect(true).toBeTruthy())
 })

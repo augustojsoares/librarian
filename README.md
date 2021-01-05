@@ -2,12 +2,23 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Getting started
+
+After cloning this repo down, run:
+
+`yarn install`
+
+Once all dependencies are installed, run the API and the frontend
+
 ## API running instructions
-Librarian leverages a very simple `json-server` API for demonstrations and development purposes.
-There are three possible ways to run de development API. All API instances will be available on port `3001`
+
+Librarian leverages a very simple mock API created with [json-server](https://github.com/typicode/json-server) for demonstrations and development purposes.
+
+There are three possible ways to run de development API. All API instances will be available on port `3001`.
+
 ### `yarn api`
 
-Runs an instance of the API that is seeded with records comprised of fake data. 
+Runs an instance of the API that is seeded with records comprised of fake data.
 
 Has a built in delay of 500ms to simulate real API conditions.
 
@@ -20,7 +31,6 @@ Has a built in delay of 500ms to simulate real API conditions.
 ### `yarn api:fast`
 
 Runs an API instance with fake data (like `yarn api`), but has no built in delay and therefore has a response time equatable to local data.
-
 
 ## Frontend running instructions
 
@@ -36,3 +46,7 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+## Documentation
+
+Please find more information and implementation details about this project in the [Project Report](REPORT.md) and [Post-Mortem](POST-MORTEM.md)

@@ -89,11 +89,11 @@ To this goal, the objective was to keep the architecture [as simple as possible]
 
   - Bundle size
 
-    This app was developed with no regard for bundle size. A good example of where this could be improved is `parse-link-header` which while useful in a prototyping scenario has a relatively large bundle size for the features it provides and would be easy to emulate locally.
+    This app was developed with no regard for bundle size. A good example of where this could be improved is `parse-link-header` which while useful in a prototyping scenario has a relatively large bundle size for the features it provides and would be easy to emulate locally;
 
-- An architectural change in the way the booking creation form is handled. See [lessons learned](lessons-learned)
+- An architectural change in the way the booking creation form is handled. See [lessons learned](lessons-learned).
 
-## lessons learned
+## Lessons learned
 
 Despite what I would call the overall success of this project, I have two main lessons learned for the future.
 

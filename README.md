@@ -49,4 +49,4 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ## Documentation
 
-Please find more information and implementation details about this project in the [Project Report](REPORT.md) and [Post-Mortem](POST-MORTEM.md)
+Please find more information and implementation details about this project in the [Project Report](REPORT.md) and [Post-Mortem](POST-MORTEM.md).

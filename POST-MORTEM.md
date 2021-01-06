@@ -57,6 +57,10 @@ To this goal, the objective was to keep the architecture [as simple as possible]
 
   For most mainly presentational components tests were omitted entirely and the ones for [`BookCard`](src/__tests/BookCard.test.js) should be taken as example;
 
+- Support for mobile device rendering
+  
+  Due to the aforementioned time constraints this app was developed for a modern desktop environment with no concern towards mobile device compatibility. Production deployment would necessitate evolving the stylings to properly handle the different touchpoints and provide compatible layouts. As it stands, even though there is no such support, the component organization and style definition organically supports that type of extension;
+
 - A complete accessibility audit
 
   Although there was some concern with accessibility as well as what's provided by using `hsds-react` components, accessibility is far from thoroughly considered and would require a full audit before going to production;
